@@ -161,8 +161,8 @@ drawmenu(void)
 	w = (lines > 0 || !matches) ? mw - x : inputw;
 	drw_setscheme(drw, scheme[SchemeNorm]);
 	if (passwd) {
-	        censort = ecalloc(1, sizeof(text));
-		memset(censort, '.', strlen(text));
+	        censort = ecalloc(1, strlen(text) * 3 + 1);
+		for (size_t ci = 0; ci < strlen(text); ci++) memcpy(censort + ci * 3, "•", 3);
 		drw_text(drw, x, 0, w, bh, lrpad / 2, censort, 0);
 		free(censort);
 	} else drw_text(drw, x, 0, w, bh, lrpad / 2, text, 0);
