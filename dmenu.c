@@ -80,7 +80,8 @@ appenditem(struct item *item, struct item **list, struct item **last)
 static void
 calcoffsets(void)
 {
-	int i, n;
+	int i, n, count;
+	struct item *item;
 
 	if (lines > 0)
 		n = lines * bh;
@@ -93,6 +94,15 @@ calcoffsets(void)
 	for (i = 0, prev = curr; prev && prev->left; prev = prev->left)
 		if ((i += (lines > 0) ? bh : textw_clamp(prev->left->text, n)) > n)
 			break;
+	/* resize window height to number of visible matches, capped at lines */
+	if (lines > 0 && win) {
+		for (count = 0, item = matches; item; item = item->right)
+			count++;
+		count = count < lines ? count : lines;
+		mh = (count + 1) * bh;
+		XResizeWindow(dpy, win, mw, mh);
+		drw_resize(drw, mw, mh);
+	}
 }
 
 static void
