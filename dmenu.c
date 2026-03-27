@@ -369,7 +369,9 @@ keypress(XKeyEvent *ev)
 	case XK_j: /* fallthrough */
 	case XK_J: /* fallthrough */
 	case XK_m: /* fallthrough */
-	case XK_M: ksym = XK_Return; ev->state &= ~ControlMask; break;
+	case XK_M: /* fallthrough */
+	case XK_o: /* fallthrough */
+	case XK_O: ksym = XK_Return; ev->state &= ~ControlMask; break;
 	case XK_n: ksym = XK_Down;      break;
 	case XK_p: ksym = XK_Up;        break;
 		case XK_u: /* delete left */
