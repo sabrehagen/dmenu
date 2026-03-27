@@ -95,7 +95,7 @@ calcoffsets(void)
 		if ((i += (lines > 0) ? bh : textw_clamp(prev->left->text, n)) > n)
 			break;
 	/* resize window height to number of visible matches, capped at lines */
-	if (lines > 0 && win) {
+	if (dynamicheight && lines > 0 && win) {
 		for (count = 0, item = matches; item; item = item->right)
 			count++;
 		count = count < lines ? count : lines;
@@ -738,7 +738,7 @@ setup(void)
 static void
 usage(void)
 {
-	die("usage: dmenu [-bfivP] [-l lines] [-p prompt] [-fn font] [-m monitor]\n"
+	die("usage: dmenu [-bfivPr] [-l lines] [-p prompt] [-fn font] [-m monitor]\n"
 	    "             [-nb color] [-nf color] [-sb color] [-sf color] [-w windowid]");
 }
 
@@ -762,6 +762,8 @@ main(int argc, char *argv[])
 			fstrstr = cistrstr;
 		} else if (!strcmp(argv[i], "-P"))   /* is the input a password */
 			passwd = 1;
+		else if (!strcmp(argv[i], "-r"))     /* dynamic height resize */
+			dynamicheight = 1;
 		else if (i + 1 == argc)
 			usage();
 		/* these options take one argument */
