@@ -380,6 +380,11 @@ keypress(XKeyEvent *ev)
 			XConvertSelection(dpy, (ev->state & ShiftMask) ? clip : XA_PRIMARY,
 			                  utf8, utf8, win, CurrentTime);
 			return;
+		case XK_v: /* paste clipboard */
+		case XK_V:
+			if (ev->state & ShiftMask)
+				XConvertSelection(dpy, clip, utf8, utf8, win, CurrentTime);
+			return;
 		case XK_Left:
 		case XK_KP_Left:
 			movewordedge(-1);
